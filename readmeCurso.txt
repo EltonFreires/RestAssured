@@ -10,4 +10,11 @@ Em https://mvnrepository.com/, buscar por rest assured
                     <version>4.0.0</version>
                 </dependency>
             </dependencies>
-    - Verificar se foi criada em Maven/project/dependencies
+        - Verificar se foi criada em Maven/project/dependencies
+    - Criar as dependencias do junit
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        - Verificar se foi criada em Maven/project/dependencies
