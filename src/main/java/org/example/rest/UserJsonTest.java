@@ -39,4 +39,16 @@ public class UserJsonTest {
         int id = JsonPath.from(response.asString()).getInt("id");
         Assert.assertEquals(1, id);
     }
+
+    @Test
+    public void verificandoSegundoNivel(){
+        given()
+                .when()
+                .get(pathApi+"/users/2")
+
+                .then()
+                .statusCode(200)
+                .body("name", containsString("Joaquina"))
+                .body("endereco.rua", is("Rua dos bobos"));
+    }
 }
