@@ -35,10 +35,10 @@ public class OlaMundoTeste {
     public void olaMundo3() {
         // Given/When/Then
         given()
-        .when()
-            .get("http://restapi.wcaquino.me/ola")
-        .then()
-            .statusCode(200);
+                .when()
+                .get("http://restapi.wcaquino.me/ola")
+                .then()
+                .statusCode(200);
     }
 
     @Test
@@ -78,24 +78,35 @@ public class OlaMundoTeste {
     }
 
     @Test
-    public void matcherHamcrest(){
+    public void matcherHamcrest() {
         assertThat("maria", is("maria"));
         assertThat(12, is(12));
         assertThat(12, isA(Integer.class));
         assertThat(12, lessThan(13));
 
-        List<Integer> impares = Arrays.asList(1,3,5,7);
+        List<Integer> impares = Arrays.asList(1, 3, 5, 7);
         assertThat(impares, hasSize(4));
-        assertThat(impares, contains(1,3,5,7));
-        assertThat(impares, containsInAnyOrder(1,3,7,5));
+        assertThat(impares, contains(1, 3, 5, 7));
+        assertThat(impares, containsInAnyOrder(1, 3, 7, 5));
         assertThat(impares, hasItem(3));
-        assertThat(impares, hasItems(3,7));
+        assertThat(impares, hasItems(3, 7));
 
         assertThat("maria", is(not("joão")));
         assertThat("maria", not("joão"));
         assertThat("maria", anyOf(is("joão"), is("maria")));
         assertThat("joaquina", allOf(startsWith("joa"), endsWith("ina"), containsString("qui")));
+    }
 
-
+    @Test
+    public void validandoBody() {
+        // Given/When/Then
+        given()
+                .when()
+                .get("http://restapi.wcaquino.me/ola")
+                .then()
+                .statusCode(200)
+                .body(is("Ola Mundo!"))
+                .body(containsString("Mundo"))
+                .body(is(not(nullValue())));
     }
 }
