@@ -11,11 +11,12 @@ import static org.hamcrest.Matchers.*;
 
 public class UserJsonTest {
     String pathApi = "http://restapi.wcaquino.me";
+
     @Test
-    public void verificandoPrimeiroNivel1(){
+    public void verificandoPrimeiroNivel1() {
         given()
                 .when()
-                .get(pathApi+"/users/1")
+                .get(pathApi + "/users/1")
                 .then()
                 .statusCode(200)
                 .body("id", is(1))
@@ -27,11 +28,11 @@ public class UserJsonTest {
     }
 
     @Test
-    public void verificandoPrimeiroNivel2(){
-        Response response = request(Method.GET, pathApi+"/users/1");
+    public void verificandoPrimeiroNivel2() {
+        Response response = request(Method.GET, pathApi + "/users/1");
 
         Assert.assertEquals(new Integer(1), response.path("id"));
-        Assert.assertEquals(new Integer(1), response.path("%s","id"));
+        Assert.assertEquals(new Integer(1), response.path("%s", "id"));
 
         JsonPath jsonPath = new JsonPath(response.asString());
         Assert.assertEquals(1, jsonPath.getInt("id"));
@@ -41,10 +42,10 @@ public class UserJsonTest {
     }
 
     @Test
-    public void verificandoSegundoNivel(){
+    public void verificandoSegundoNivel() {
         given()
                 .when()
-                .get(pathApi+"/users/2")
+                .get(pathApi + "/users/2")
 
                 .then()
                 .statusCode(200)
@@ -53,10 +54,10 @@ public class UserJsonTest {
     }
 
     @Test
-    public void verificandoSegundoNivelLista(){
+    public void verificandoSegundoNivelLista() {
         given()
                 .when()
-                .get(pathApi+"/users/3")
+                .get(pathApi + "/users/3")
 
                 .then()
                 .statusCode(200)
@@ -65,5 +66,16 @@ public class UserJsonTest {
                 .body("filhos[0].name", is("Zezinho"))
                 .body("filhos[1].name", is("Luizinho"))
                 .body("filhos.name", hasItem("Luizinho"));
+    }
+
+    @Test
+    public void verificandoErro() {
+        given()
+                .when()
+                .get(pathApi + "/users/4")
+
+                .then()
+                .statusCode(404)
+                .body("error", is("Usuário inexistente"));
     }
 }
