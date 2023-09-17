@@ -6,7 +6,9 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -125,5 +127,21 @@ public class UserJsonTest {
                 .body("salary.findAll{it != null}.sum()", is(closeTo(3734.5678f, 0.001)))
                 .body("salary.findAll{it != null}.sum()", allOf(greaterThan(3000d), lessThan(4000d)))
         ;
+    }
+
+    @Test
+    public void jsonPathComJava() {
+        ArrayList<String> names =
+        given()
+                .when()
+                .get(pathApi + "/users")
+
+                .then()
+                .statusCode(200)
+                .extract().path("name.findAll{it.startsWith('Maria')}");
+
+        Assert.assertEquals(1, names.size());
+        Assert.assertTrue(names.get(0).equalsIgnoreCase("maria joaquina"));
+        Assert.assertEquals(names.get(0).toUpperCase(), "maria joaquina".toUpperCase());
     }
 }
